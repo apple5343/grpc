@@ -1,0 +1,87 @@
+syntax = "proto3";
+package calc;
+option go_package = "github.com/apple5343/golangProjectV2";
+import "google/protobuf/any.proto";
+
+service Auth {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+message Empty {}
+
+message IsAdminRequest{
+    int64 user_id = 1;
+}
+
+message IsAdminResponse{
+    bool is_admin = 1;
+}
+
+message RegisterRequest{
+    string name = 1;
+    string password = 2;
+}
+
+message RegisterResponse{
+    int64 user_id = 1;
+}
+
+message LoginRequest{
+    string name = 1;
+    string password = 2;
+}
+
+message LoginResponse{
+    string token = 1;
+}
+
+service Calculator{
+    rpc AddTask (AddTaskRequest) returns (Empty);
+    rpc GetAllTasks (GetAllTasksRequest) returns (GetAllTasksResponse);
+    rpc GetWorkersInfo (Empty) returns (GetWorkersInfoResponse);
+    rpc UpdateDelays (UpdateDelaysRequest) returns (Empty);
+    rpc GetDelays (Empty) returns (GetDelaysResponse);
+    rpc GetTask (GetTaskRequest) returns (GetTaskResponse);
+}
+
+message MapEntry {
+    map<string, google.protobuf.Any> fieldMap = 1;
+}
+
+message AddTaskRequest{
+    int64 user_id = 1;
+    string task = 2;
+}
+
+message GetAllTasksRequest{
+    int64 user_id = 1;
+}
+
+message GetAllTasksResponse{
+    repeated MapEntry tasks = 1; //[]map[string]interface{
+}
+
+message UpdateDelaysRequest{
+    map<string, google.protobuf.Any> delays = 1; //map[string]int
+}
+
+
+message GetWorkersInfoResponse{
+    repeated MapEntry workers = 1; //[]map[string]interface{}S
+}
+
+
+message GetDelaysResponse{
+    map<string, google.protobuf.Any> delays = 1; //map[string]int
+}
+
+message GetTaskRequest{
+    int64 task_id = 1;
+    int64 user_id = 2;
+}
+
+message GetTaskResponse{
+    string task = 1; //json в формате str
+}
