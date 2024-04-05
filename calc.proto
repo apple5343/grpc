@@ -60,21 +60,21 @@ message GetAllTasksRequest{
 }
 
 message GetAllTasksResponse{
-    repeated MapEntry tasks = 1; //[]map[string]interface{
+    string tasks = 1;
 }
 
 message UpdateDelaysRequest{
-    map<string, google.protobuf.Any> delays = 1; //map[string]int
+    string delays = 1;
 }
 
 
 message GetWorkersInfoResponse{
-    repeated MapEntry workers = 1; //[]map[string]interface{}S
+    string  workers = 1;
 }
 
 
 message GetDelaysResponse{
-    map<string, google.protobuf.Any> delays = 1; //map[string]int
+    string delays = 1;
 }
 
 message GetTaskRequest{
