@@ -216,7 +216,7 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CalculatorClient interface {
-	AddTask(ctx context.Context, in *AddTaskRequest, opts ...grpc.CallOption) (*Empty, error)
+	AddTask(ctx context.Context, in *AddTaskRequest, opts ...grpc.CallOption) (*AddTaskResponse, error)
 	GetAllTasks(ctx context.Context, in *GetAllTasksRequest, opts ...grpc.CallOption) (*GetAllTasksResponse, error)
 	GetWorkersInfo(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetWorkersInfoResponse, error)
 	UpdateDelays(ctx context.Context, in *UpdateDelaysRequest, opts ...grpc.CallOption) (*Empty, error)
@@ -232,8 +232,8 @@ func NewCalculatorClient(cc grpc.ClientConnInterface) CalculatorClient {
 	return &calculatorClient{cc}
 }
 
-func (c *calculatorClient) AddTask(ctx context.Context, in *AddTaskRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *calculatorClient) AddTask(ctx context.Context, in *AddTaskRequest, opts ...grpc.CallOption) (*AddTaskResponse, error) {
+	out := new(AddTaskResponse)
 	err := c.cc.Invoke(ctx, "/calc.Calculator/AddTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -290,7 +290,7 @@ func (c *calculatorClient) GetTask(ctx context.Context, in *GetTaskRequest, opts
 // All implementations must embed UnimplementedCalculatorServer
 // for forward compatibility
 type CalculatorServer interface {
-	AddTask(context.Context, *AddTaskRequest) (*Empty, error)
+	AddTask(context.Context, *AddTaskRequest) (*AddTaskResponse, error)
 	GetAllTasks(context.Context, *GetAllTasksRequest) (*GetAllTasksResponse, error)
 	GetWorkersInfo(context.Context, *Empty) (*GetWorkersInfoResponse, error)
 	UpdateDelays(context.Context, *UpdateDelaysRequest) (*Empty, error)
@@ -303,7 +303,7 @@ type CalculatorServer interface {
 type UnimplementedCalculatorServer struct {
 }
 
-func (UnimplementedCalculatorServer) AddTask(context.Context, *AddTaskRequest) (*Empty, error) {
+func (UnimplementedCalculatorServer) AddTask(context.Context, *AddTaskRequest) (*AddTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTask not implemented")
 }
 func (UnimplementedCalculatorServer) GetAllTasks(context.Context, *GetAllTasksRequest) (*GetAllTasksResponse, error) {

@@ -47,7 +47,7 @@ message LoginResponse{
 }
 
 service Calculator{
-    rpc AddTask (AddTaskRequest) returns (Empty);
+    rpc AddTask (AddTaskRequest) returns (AddTaskResponse);
     rpc GetAllTasks (GetAllTasksRequest) returns (GetAllTasksResponse);
     rpc GetWorkersInfo (Empty) returns (GetWorkersInfoResponse);
     rpc UpdateDelays (UpdateDelaysRequest) returns (Empty);
@@ -57,6 +57,10 @@ service Calculator{
 
 message MapEntry {
     map<string, google.protobuf.Any> fieldMap = 1;
+}
+
+message AddTaskResponse{
+    string task = 1;
 }
 
 message AddTaskRequest{
